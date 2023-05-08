@@ -42,24 +42,19 @@ export default function Top() {
           <li
             className={styles.li}
             onMouseOver={() => setIsVisible(true)}
-            onMouseLeave={() => setIsVisible(false)}
-          >
+            onMouseLeave={() => setIsVisible(false)}>
             {isLoggedIn ? (
-              <li>
-                <div className={styles.flex}>
-                  <img src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light" />
-                  <span>Rashad</span>
-                  <RiArrowDropDownFill />
-                </div>
-              </li>
+              <div className={styles.flex}>
+                <img src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light" />
+                <span>Rashad</span>
+                <RiArrowDropDownFill />
+              </div>
             ) : (
-              <li>
-                <div className={styles.flex}>
-                  <RiAccountPinCircleLine />
-                  <span>Account</span>
-                  <RiArrowDropDownFill />
-                </div>
-              </li>
+              <div className={styles.flex}>
+                <RiAccountPinCircleLine />
+                <span>Account</span>
+                <RiArrowDropDownFill />
+              </div>
             )}
             {isVisible && <UserMenu isLoggedIn={isLoggedIn} />}
           </li>

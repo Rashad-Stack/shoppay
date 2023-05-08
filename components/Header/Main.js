@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RiSearch2Line } from "react-icons/ri";
 import { FaOpencart } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 export default function Main() {
   const { cart } = useSelector((state) => ({ ...state }));
