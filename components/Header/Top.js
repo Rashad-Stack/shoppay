@@ -7,9 +7,11 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import UserMenu from "./UserMenu";
 
-export default function Top() {
+export default function Top({ country }) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+
+  const { name, flag } = country || {};
 
   return (
     <div className={styles.top}>
@@ -17,11 +19,8 @@ export default function Top() {
         <div></div>
         <ul className={styles.top_list}>
           <li className={styles.li}>
-            <img
-              src="https://www.seekpng.com/png/detail/298-2988630_illustration-of-flag-of-bangladesh-bangladesh-flag-logo.png"
-              alt="Illustration Of Flag Of Bangladesh - Bangladesh Flag Logo Png@seekpng.com"
-            />
-            <span>Bangladesh / bdt</span>
+            <img src={flag} alt={name} />
+            <span>{name} / bdt</span>
           </li>
           <li className={styles.li}>
             <MdSecurity />
