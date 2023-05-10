@@ -3,15 +3,17 @@ import { MdSecurity } from "react-icons/md";
 import { BsSuitHeart } from "react-icons/bs";
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from "react-icons/ri";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import styles from "./styles.module.scss";
 import UserMenu from "./UserMenu";
 
 export default function Top({ country }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { data: session } = useSession();
   const [isVisible, setIsVisible] = useState(false);
 
   const { name, flag } = country || {};
+  const { name: username, image } = session?.user || {};
 
   return (
     <div className={styles.top}>
@@ -42,10 +44,10 @@ export default function Top({ country }) {
             className={styles.li}
             onMouseOver={() => setIsVisible(true)}
             onMouseLeave={() => setIsVisible(false)}>
-            {isLoggedIn ? (
+            {session ? (
               <div className={styles.flex}>
-                <img src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light" />
-                <span>Rashad</span>
+                <img src={image} />
+                <span>{username}</span>
                 <RiArrowDropDownFill />
               </div>
             ) : (
@@ -55,7 +57,7 @@ export default function Top({ country }) {
                 <RiArrowDropDownFill />
               </div>
             )}
-            {isVisible && <UserMenu isLoggedIn={isLoggedIn} />}
+            {isVisible && <UserMenu />}
           </li>
         </ul>
       </div>
