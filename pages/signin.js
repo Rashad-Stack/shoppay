@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "@/styles/signin.module.scss";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
@@ -8,10 +8,15 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import LoginInput from "@/components/Inputs/logininput";
 import CircledIconBtn from "@/components/buttons/circledIconBtn";
-import { getProviders, signIn } from "next-auth/react";
-import { useLoginMutation } from "@/features/auth/authApi";
+import {
+  getCsrfToken,
+  getProviders,
+  getSession,
+  signIn,
+} from "next-auth/react";
+import { useRegisterMutation } from "@/features/auth/authApi";
 import DotLoader from "@/components/loaders/dotLoader";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const initialValues = {
   login_email: "",
@@ -20,6 +25,8 @@ const initialValues = {
   email: "",
   password: "",
   conf_password: "",
+  success: "",
+  login_error: "",
 };
 
 const loginValidation = Yup.object({
@@ -51,13 +58,22 @@ const registerValidation = Yup.object({
     .oneOf([Yup.ref("password")], "Passwords must match."),
 });
 
-export default function Signin({ providers }) {
-  const [login, { data, isLoading, isError, error, isSuccess }] =
-    useLoginMutation();
+export default function Signin({ providers, csrfToken, callbackUrl }) {
+  const [register, { data, isLoading, isError, error, isSuccess }] =
+    useRegisterMutation();
 
   const [user, setUser] = useState(initialValues);
-  const { login_email, login_password, name, email, password, conf_password } =
-    user;
+  const [loading, setLoading] = useState(false);
+
+  const {
+    login_email,
+    login_password,
+    name,
+    email,
+    password,
+    conf_password,
+    login_error,
+  } = user;
 
   const router = useRouter();
 
@@ -66,17 +82,34 @@ export default function Signin({ providers }) {
     setUser({ ...user, [name]: value });
   };
 
+  const handleLogin = async () => {
+    setLoading(true);
+    let options = {
+      redirect: false,
+      email: login_email,
+      password: login_password,
+    };
+
+    const res = await signIn("credentials", options);
+    setUser({ ...user, success: "", login_error: "" });
+    setLoading(false);
+    if (res?.error) {
+      setLoading(false);
+      setUser({ ...user, login_error: res?.error });
+    } else {
+      router.push(callbackUrl || "/");
+    }
+  };
+
   useEffect(() => {
     if (isSuccess) {
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      router.push(callbackUrl || "/");
     }
-  }, [isSuccess, router]);
+  }, [callbackUrl, isSuccess, router]);
 
   return (
     <>
-      {isLoading && <DotLoader loading={isLoading} />}
+      {(loading || isLoading) && <DotLoader loading={isLoading} />}
       <Header />
       <div className={styles.login}>
         <div className={styles.login_container}>
@@ -96,48 +129,61 @@ export default function Signin({ providers }) {
             <Formik
               enableReinitialize
               initialValues={{ login_email, login_password }}
-              validationSchema={loginValidation}>
+              validationSchema={loginValidation}
+              onSubmit={handleLogin}>
               {(form) => (
-                <>
-                  <Form>
-                    <LoginInput
-                      type="text"
-                      name="login_email"
-                      icon="email"
-                      placeholder="Email Address"
-                      onChange={handleChange}
-                    />
-                    <LoginInput
-                      type="password"
-                      name="login_password"
-                      icon="password"
-                      placeholder="Password"
-                      onChange={handleChange}
-                    />
-                  </Form>
+                <Form method="post" action="/api/auth/signin/email">
+                  <input
+                    type="hidden"
+                    hidden
+                    name="csrfToken"
+                    defaultValue={csrfToken}
+                  />
+                  <LoginInput
+                    type="text"
+                    name="login_email"
+                    icon="email"
+                    placeholder="Email Address"
+                    onChange={handleChange}
+                  />
+                  <LoginInput
+                    type="password"
+                    name="login_password"
+                    icon="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                  />
                   <CircledIconBtn type="submit" text="Sign in" />
+                  {login_error && (
+                    <div>
+                      <span className={styles.error}>{login_error}</span>
+                    </div>
+                  )}
                   <div className={styles.forget}>
                     <Link href="/forget">Forget Password ?</Link>
                   </div>
-                </>
+                </Form>
               )}
             </Formik>
             <div className={styles.login_socials}>
               <span className={styles.or}>Or continue with</span>
               <div className={styles.login_socials_wrap}>
-                {providers.map((provider) => (
-                  <div key={provider.id}>
-                    <button
-                      className={styles.socials_btn}
-                      onClick={() => signIn(provider.id)}>
-                      <img
-                        src={`/icons/${provider.name}.png`}
-                        alt={provider.name}
-                      />
-                      Sign in with {provider.name}
-                    </button>
-                  </div>
-                ))}
+                {providers.map((provider) => {
+                  if (provider.name === "Credentials") return;
+                  return (
+                    <div key={provider.id}>
+                      <button
+                        className={styles.socials_btn}
+                        onClick={() => signIn(provider.id)}>
+                        <img
+                          src={`/icons/${provider.name}.png`}
+                          alt={provider.name}
+                        />
+                        Sign in with {provider.name}
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -152,14 +198,14 @@ export default function Signin({ providers }) {
               enableReinitialize
               initialValues={{ name, email, password, conf_password }}
               validationSchema={registerValidation}
-              onSubmit={() => {
-                login({
+              onSubmit={() =>
+                register({
                   name,
                   email,
                   password,
                   confirmPassword: conf_password,
-                });
-              }}>
+                })
+              }>
               {(form) => (
                 <>
                   <Form>
@@ -211,6 +257,18 @@ export default function Signin({ providers }) {
 }
 
 export async function getServerSideProps(context) {
+  const { req, query } = context;
+  const { callbackUrl } = query;
+
+  const session = await getSession({ req });
+  if (session) {
+    return {
+      redirect: {
+        destination: callbackUrl,
+      },
+    };
+  }
+  const csrfToken = await getCsrfToken(context);
   const providers = Object.values(await getProviders());
-  return { props: { providers } };
+  return { props: { providers, csrfToken, callbackUrl } };
 }

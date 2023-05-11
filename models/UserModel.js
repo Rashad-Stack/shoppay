@@ -99,12 +99,12 @@ userSchema.pre("save", async function (next) {
 });
 
 // // Password checking for login
-// userSchema.methods.correctPassword = async function (
-//   candidatePassword,
-//   userPassword
-// ) {
-//   return await bcrypt.compare(candidatePassword, userPassword);
-// };
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;
