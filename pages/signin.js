@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/signin.module.scss";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import Link from "next/link";
@@ -9,6 +9,9 @@ import * as Yup from "yup";
 import LoginInput from "@/components/Inputs/logininput";
 import CircledIconBtn from "@/components/buttons/circledIconBtn";
 import { getProviders, signIn } from "next-auth/react";
+import { useLoginMutation } from "@/features/auth/authApi";
+import DotLoader from "@/components/loaders/dotLoader";
+import { useRouter } from "next/navigation";
 
 const initialValues = {
   login_email: "",
@@ -49,19 +52,31 @@ const registerValidation = Yup.object({
 });
 
 export default function Signin({ providers }) {
+  const [login, { data, isLoading, isError, error, isSuccess }] =
+    useLoginMutation();
+
   const [user, setUser] = useState(initialValues);
   const { login_email, login_password, name, email, password, conf_password } =
     user;
 
-  console.log(providers);
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    }
+  }, [isSuccess, router]);
+
   return (
     <>
+      {isLoading && <DotLoader loading={isLoading} />}
       <Header />
       <div className={styles.login}>
         <div className={styles.login_container}>
@@ -136,7 +151,15 @@ export default function Signin({ providers }) {
             <Formik
               enableReinitialize
               initialValues={{ name, email, password, conf_password }}
-              validationSchema={registerValidation}>
+              validationSchema={registerValidation}
+              onSubmit={() => {
+                login({
+                  name,
+                  email,
+                  password,
+                  confirmPassword: conf_password,
+                });
+              }}>
               {(form) => (
                 <>
                   <Form>
@@ -168,11 +191,17 @@ export default function Signin({ providers }) {
                       placeholder="Re-Type Password"
                       onChange={handleChange}
                     />
+                    <CircledIconBtn type="submit" text="Sign up" />
                   </Form>
-                  <CircledIconBtn type="submit" text="Sign up" />
                 </>
               )}
             </Formik>
+            {isSuccess && (
+              <span className={styles.success}>{data?.message}</span>
+            )}
+            {isError && (
+              <span className={styles.error}>{error?.data?.message}</span>
+            )}
           </div>
         </div>
       </div>
