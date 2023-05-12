@@ -38,8 +38,36 @@ const authApi = apiSlice.injectEndpoints({
           };
         },
       }),
+      resetPassword: builder.mutation({
+        query(data) {
+          const { token, password, confirmPassword } = data || {};
+          return {
+            url: `/auth/reset/${token}`,
+            method: "PATCH",
+            body: { password, confirmPassword },
+          };
+        },
+        async onQueryStarted(data, { queryFulfilled, dispatch }) {
+          const { data: result } = await queryFulfilled;
+
+          if (result?.status === "success") {
+            if (result) {
+              let options = {
+                redirect: false,
+                email: result.email,
+                password: data.password,
+              };
+              await signIn("credentials", options);
+            }
+          }
+        },
+      }),
     };
   },
 });
 
-export const { useRegisterMutation, useForgotPasswordMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} = authApi;

@@ -1,7 +1,6 @@
 import User from "@/models/UserModel";
 import db from "@/utils/db";
 import { sendEmail } from "@/utils/emailSender";
-import { activationToken } from "@/utils/token";
 import { validateEmail } from "@/utils/validation";
 import morgan from "morgan";
 import { createRouter } from "next-connect";
@@ -53,6 +52,9 @@ router.post(async (req, res) => {
       message: "Password reset token send to your email!",
     });
   } catch (error) {
+    user.passwordResetToken = undefined;
+    user.resetTokenExpires = undefined;
+    await user.save({ validateBeforeSave: false });
     res.status(401).json({
       status: "failed",
       message: error.message,

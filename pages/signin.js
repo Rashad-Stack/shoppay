@@ -160,7 +160,7 @@ export default function Signin({ providers, csrfToken, callbackUrl }) {
                     </div>
                   )}
                   <div className={styles.forget}>
-                    <Link href="/forget">Forget Password ?</Link>
+                    <Link href="/auth/forgot">Forget Password ?</Link>
                   </div>
                 </Form>
               )}
