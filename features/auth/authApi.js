@@ -29,8 +29,17 @@ const authApi = apiSlice.injectEndpoints({
           }
         },
       }),
+      forgotPassword: builder.mutation({
+        query(email) {
+          return {
+            url: "/auth/forgot",
+            method: "POST",
+            body: { email },
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useRegisterMutation } = authApi;
+export const { useRegisterMutation, useForgotPasswordMutation } = authApi;
