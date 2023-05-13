@@ -6,12 +6,27 @@
     "menu header header"
     "menu swiper user"
     "menu offers user";
+  @media (max-width: 1245px) {
+    grid-template-columns: 1fr 3fr;
+  }
+  @media (max-width: 990px) {
+    grid-template-columns: auto 3fr;
+  }
+  @media (max-width: 730px) {
+    grid-template-areas:
+      "menu "
+      "swiper "
+      "offers";
+    grid-template-columns: 1fr;
+  }
+
   .menu {
     grid-area: menu;
     height: auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: $shadow-1;
+
     &_header {
       display: flex;
       align-items: center;
@@ -25,6 +40,9 @@
       svg {
         height: 23px;
         width: 23px;
+      }
+      @media (max-width: 990px) {
+        display: none;
       }
     }
     &_list {
@@ -49,6 +67,30 @@
           }
         }
       }
+      @media (max-width: 990px) {
+        display: flex;
+        flex-direction: column;
+        width: 80px;
+        align-items: center;
+        gap: 1.5px;
+        li {
+          a {
+            span {
+              display: none;
+            }
+            svg {
+              transform: scale(1.5);
+            }
+          }
+        }
+      }
+      @media (max-width: 730px) {
+        width: 100%;
+        height: fit-content;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
     }
   }
   .header {
@@ -57,6 +99,22 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: $shadow-1;
+    @media (max-width: 730px) {
+      display: none !important;
+    }
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      height: 100%;
+      li {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 19px;
+        color: $blue-color;
+      }
+    }
   }
   .swiper {
     grid-area: swiper;
@@ -72,6 +130,9 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: $shadow-1;
+    @media (max-width: 1245px) {
+      display: none;
+    }
     &_container {
       padding: 1rem;
     }
@@ -108,12 +169,14 @@
       position: relative;
       width: 80px;
       height: 80px;
-      border-radius: 50%;
+      border-radius: 100%;
       box-shadow: $shadow-1;
+      overflow: hidden;
     }
     h4 {
       margin-top: 10px;
       text-transform: capitalize;
+      text-align: center;
     }
     &_links {
       display: flex;

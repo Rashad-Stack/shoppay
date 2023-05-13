@@ -136,13 +136,20 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .offers_swiper {
-  max-width: 62%;
   transform: translateX(31%);
+  @media (max-width: 990px) {
+    transform: translateX(20%);
+  }
+  @media (max-width: 990px) {
+    transform: translateX(1%);
+  }
   .swiper {
     width: 100%;
     height: 100%;
   }
-
+  .swiper-pagination {
+    display: none !important;
+  }
   .swiper-slide {
     text-align: center;
     font-size: 18px;

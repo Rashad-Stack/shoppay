@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { offersAarray } from "@/data/home";
 
 // import required modules
-import { Navigation } from "swiper";
+import { Pagination, Navigation } from "swiper";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -19,11 +19,12 @@ export default function Offers() {
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
-        // pagination={{
-        //   clickable: true,
-        // }}
+        pagination={{
+          clickable: false,
+          renderBullet: false,
+        }}
         navigation={true}
-        modules={[Navigation]}
+        modules={[Pagination, Navigation]}
         className="offers_swiper">
         {offersAarray.map((offer, i) => (
           <SwiperSlide key={i}>
