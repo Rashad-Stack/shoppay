@@ -1,9 +1,17 @@
 $blue-color: #2f82ff;
+$dark-blue-color: #1a28f1dc;
+$yellow-color: #fac80f;
+$violet-color: #5a31f4;
+$green-color: #3c811f;
+$redis-color: #f15f6f;
 $gray-color: #f8f8f8;
 $light-error-color: #fd010169;
 $error-color: #ed4337;
+$error-secondary-color: #f02f2fd8;
 $success-color: #6cc070;
 $shadow-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$shadow-2: rgba(99, 99, 99, 0.1) 0px 0px 4px 0px;
+$cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 .btn_primary {
   display: flex;
@@ -35,3 +43,139 @@ $shadow-1: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   align-items: center;
   gap: 5px;
 }
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+// ============= Swiper Slider ==================
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  margin-left: auto;
+  margin-right: auto;
+  &:hover {
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: grid;
+    }
+  }
+}
+
+.main_swiper,
+.offers_swiper,
+.user_menu_swiper {
+  .swiper {
+    border-radius: 10px !important;
+    overflow: hidden;
+  }
+  .swiper-slide img {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+  .swiper-pagination-bullet {
+    width: 9px !important;
+    border-radius: 5px !important;
+    transition: all 0.2s ease-out;
+  }
+  .swiper-pagination-bullet-active {
+    background-color: $blue-color !important;
+    width: 13px !important;
+    transition: all 0.2s ease-out;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #fff !important;
+    transform: scale(0.5) !important;
+    width: 50px !important;
+    height: 80px !important;
+    transition: 0.2s;
+    background-color: rgba(102, 102, 102, 0.345) !important;
+    display: none;
+    place-items: center;
+  }
+  .swiper-button-prev {
+    left: -13px;
+  }
+  .swiper-button-next {
+    right: -13px;
+  }
+}
+
+.offers_swiper {
+  max-width: 62%;
+  transform: translateX(31%);
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px !important;
+    border-radius: 10px !important;
+    height: 90% !important;
+    margin-top: 0.6rem !important;
+    box-shadow: $shadow-1;
+    transition: 0.2s ease-out;
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
+
+.user_menu_swiper {
+  width: 200px;
+  height: 280px;
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+// ============= Swiper Slider ==================

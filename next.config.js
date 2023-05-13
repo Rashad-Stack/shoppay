@@ -7,6 +7,14 @@ const nextConfig = {
     includePaths: [path.join(__dirname, "styles")],
     prependData: `@import "./base.scss";`,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

@@ -13,7 +13,7 @@ export default function Main() {
     <div className={styles.main}>
       <div className={styles.main_container}>
         <Link href="/" className={styles.logo}>
-          <img src="/logo.png" alt="" />
+          <Image fill sizes="500" src="/logo.png" alt="Log image" />
         </Link>
         <div className={styles.search}>
           <input type="text" placeholder="Search..." />

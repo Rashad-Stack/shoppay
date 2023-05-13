@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import CircledIconBtn from "@/components/buttons/circledIconBtn";
 import { useForgotPasswordMutation } from "@/features/auth/authApi";
 import DotLoader from "@/components/loaders/dotLoader";
+import { getSession } from "next-auth/react";
 
 const initialValues = {
   email: "",
@@ -85,4 +86,21 @@ export default function Forgot() {
       <Footer />
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const session = await getSession({ req });
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 }

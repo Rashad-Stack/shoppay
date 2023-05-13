@@ -1,12 +1,18 @@
-import { Inter } from "next/font/google";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import axios from "axios";
+import styles from "@/styles/home.module.scss";
+import Main from "@/components/home/main";
 
 export default function Home({ country }) {
   return (
     <>
       <Header country={country} />
+      <main className={styles.home}>
+        <section className={styles.container}>
+          <Main />
+        </section>
+      </main>
       <Footer country={country} />
     </>
   );

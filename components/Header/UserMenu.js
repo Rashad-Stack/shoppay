@@ -3,6 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 import styles from "./styles.module.scss";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function UserMenu() {
   const { data: session } = useSession();
@@ -12,7 +13,9 @@ export default function UserMenu() {
       <h4>Welcome to Shoppay !</h4>
       {session ? (
         <div className={styles.flex}>
-          <img src={image} className={styles.menu_image} />
+          <div className={styles.menu_user_photo}>
+            <Image fill sizes="800" alt="User Photo" src={image} />
+          </div>
           <div className={styles.col}>
             <span>Welcome Back,</span>
             <h3>{username}</h3>

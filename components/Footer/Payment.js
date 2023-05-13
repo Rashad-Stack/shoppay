@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./styles.module.scss";
 import React from "react";
 
@@ -6,13 +7,62 @@ export default function Payment() {
     <div className={styles.footer_payment}>
       <h3>WE ACCEPT</h3>
       <div className={styles.footer_flexwrap}>
-        <img src="/images/payment/visa.webp" alt="" />
-        <img src="/images/payment/mastercard.webp" alt="" />
-        <img src="/images/payment/paypal.webp" alt="" />
-        <img src="/images/payment/maestro.webp" alt="" />
-        <img src="/images/payment/jcb.webp" alt="" />
-        <img src="/images/payment/cb.webp" alt="" />
-        <img src="/images/payment/american_express.webp" alt="" />
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/visa.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/mastercard.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/paypal.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/maestro.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/jcb.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/cb.webp"
+          />
+        </div>
+        <div className={styles.footer_card}>
+          <Image
+            fill
+            size="500"
+            alt="payment card"
+            src="/images/payment/american_express.webp"
+          />
+        </div>
       </div>
     </div>
   );

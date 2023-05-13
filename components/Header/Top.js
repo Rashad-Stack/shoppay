@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 import styles from "./styles.module.scss";
 import UserMenu from "./UserMenu";
+import Image from "next/image";
 
 export default function Top({ country }) {
   const { data: session } = useSession();
@@ -21,7 +22,9 @@ export default function Top({ country }) {
         <div></div>
         <ul className={styles.top_list}>
           <li className={styles.li}>
-            <img src={flag} alt={name} />
+            <div className={styles.img}>
+              <Image fill sizes="500" src={flag} alt={name} />
+            </div>
             <span>{name} / bdt</span>
           </li>
           <li className={styles.li}>
@@ -46,7 +49,9 @@ export default function Top({ country }) {
             onMouseLeave={() => setIsVisible(false)}>
             {session ? (
               <div className={styles.flex}>
-                <img src={image} />
+                <div className={styles.img}>
+                  <Image fill sizes="500" src={image} alt="profile photo" />
+                </div>
                 <span>{username}</span>
                 <RiArrowDropDownFill />
               </div>

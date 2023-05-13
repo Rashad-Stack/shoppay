@@ -36,6 +36,13 @@
       justify-content: center;
       gap: 4px;
       color: #666;
+      .img {
+        position: relative;
+        width: 28px;
+        height: 28px;
+        border-radius: 100%;
+        overflow: hidden;
+      }
       .flex {
         display: flex;
         align-items: center;
@@ -46,10 +53,7 @@
         }
       }
       img {
-        width: 28px;
-        height: 28px;
         object-fit: cover;
-        border-radius: 50%;
       }
       svg {
         width: 20px;
@@ -126,9 +130,13 @@
       }
     }
   }
-  &_image {
+  &_user_photo {
+    position: relative;
     width: 100px !important;
     height: 100px !important;
+    img {
+      object-fit: contain;
+    }
   }
   .col {
     display: flex;
@@ -160,9 +168,12 @@
     width: 100%;
   }
   .logo {
+    position: relative;
+    width: 140px;
+    height: 40px;
+    display: block;
     img {
-      width: 170px;
-      margin-top: 10px;
+      object-fit: contain;
     }
   }
   .search {
