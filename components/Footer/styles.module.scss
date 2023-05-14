@@ -5,10 +5,18 @@
     width: 100%;
     display: grid;
     padding: 1rem;
-    grid-template-areas: "link" "socials" "newsletter" "payment" "copyrights";
+    grid-template-areas:
+      "link"
+      "socials"
+      "newsletter"
+      "payment"
+      "copyrights";
     gap: 3rem;
     @media (min-width: 800px) {
-      grid-template-areas: "link socials" "link newsletter" "copyrights payment";
+      grid-template-areas:
+        "link socials"
+        "link newsletter"
+        "copyrights payment";
     }
     @media (min-width: 1200px) {
       max-width: 1200px;
@@ -34,6 +42,9 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
     ul {
       padding: 5px;
       b {
@@ -74,6 +85,10 @@
   &_flex {
     display: flex;
     margin-top: 10px;
+    @media (max-width: 300px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &_newsletter {
@@ -85,9 +100,17 @@
       height: 40px;
       font-size: 14px;
       padding-left: 10px;
+      @media (max-width: 300px) {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 5px;
+      }
     }
     button {
       width: 150px;
+      @media (max-width: 300px) {
+        width: 100%;
+      }
     }
     p {
       margin-top: 10px;

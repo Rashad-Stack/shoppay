@@ -11,7 +11,7 @@ export default function Links() {
         <ul key={link.heading}>
           {i === 0 ? (
             <div className={styles.logo}>
-              <Image fill sizes="500" src="/logo.png" alt="" />{" "}
+              <Image fill sizes="500" src="/logo.png" alt="logo" />{" "}
             </div>
           ) : (
             <b>{link.heading}</b>

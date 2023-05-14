@@ -36,7 +36,7 @@ export default function MainSwiper() {
               sizes="1080"
               priority
               src={`/images/swiper/${i + 1}.jpg`}
-              alt=""
+              alt="slider image"
             />
           </SwiperSlide>
         ))}

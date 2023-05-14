@@ -91,7 +91,7 @@ export default function User() {
           className="user_menu_swiper">
           {userSwiperArray.map((item, i) => (
             <SwiperSlide key={i}>
-              <Link href="#">
+              <Link href="#" className={styles.user_card}>
                 <Image
                   fill
                   sizes="500"

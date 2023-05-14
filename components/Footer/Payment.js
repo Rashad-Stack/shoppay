@@ -10,7 +10,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/visa.webp"
           />
@@ -18,7 +18,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/mastercard.webp"
           />
@@ -26,7 +26,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/paypal.webp"
           />
@@ -34,7 +34,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/maestro.webp"
           />
@@ -42,7 +42,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/jcb.webp"
           />
@@ -50,7 +50,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/cb.webp"
           />
@@ -58,7 +58,7 @@ export default function Payment() {
         <div className={styles.footer_card}>
           <Image
             fill
-            size="500"
+            sizes="500"
             alt="payment card"
             src="/images/payment/american_express.webp"
           />
