@@ -15,11 +15,14 @@ import {
   women_swiper,
 } from "@/data/home";
 import ProductsSwiper from "@/components/poductsSwiper";
+import db from "@/utils/db";
+import Product from "@/models/ProductModel";
+import ProductCard from "@/components/productCard";
 
-export default function Home({ country }) {
+export default function Home({ country, products }) {
   const isMedium = useMediaQuery({ query: "max-width:850" });
   const isMobile = useMediaQuery({ query: "(max-width:550px)" });
-
+  console.log(products);
   return (
     <>
       <Header country={country} />
@@ -66,6 +69,11 @@ export default function Home({ country }) {
             header="House improvements"
             bgColor="#6cc070"
           />
+          <div className={styles.products}>
+            {products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
         </section>
       </main>
       <Footer country={country} />
@@ -74,6 +82,8 @@ export default function Home({ country }) {
 }
 
 export async function getServerSideProps() {
+  db.connectDb();
+  const products = await Product.find().sort({ createdAt: -1 }).lean();
   // let data = await axios
   //   .get("https://api.ipregistry.co/?key=o106tfnsaxs1tytd")
   //   .then((res) => res.data.location.country)
@@ -81,6 +91,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
+      products: JSON.parse(JSON.stringify(products)),
       country: {
         name: "Bangladesh",
         flag: "https://cdn.ipregistry.co/flags/wikimedia/bd.svg",

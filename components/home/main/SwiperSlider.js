@@ -1,14 +1,9 @@
 import React, { useRef, useState } from "react";
 import styles from "./styles.module.scss";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
-// import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
 import Image from "next/image";
 
