@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 const { ObjectId } = mongoose.Schema;
 
 const reviewSchema = new mongoose.Schema({
@@ -76,6 +77,7 @@ const productSchema = new mongoose.Schema(
     shipping: { type: Number, required: true, default: 0 },
     subProducts: [
       {
+        sku: String,
         images: [],
         description_images: [],
         color: {
@@ -98,6 +100,11 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+productSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
 
 const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);

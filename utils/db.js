@@ -6,14 +6,6 @@ async function connectDb() {
     console.log("Already Connected to the database.");
     return;
   }
-  if (mongoose.connections.length > 0) {
-    connection.isConnected = mongoose.connections[0].readyState;
-    if (connection.isConnected === 1) {
-      console.log("Use previous connection to the database.");
-      return;
-    }
-    await mongoose.disconnect();
-  }
 
   const DB = process.env.MONGODB_DATABASE_URL.replace(
     "<password>",
@@ -27,6 +19,15 @@ async function connectDb() {
   console.log("New DB connection successful!");
 
   connection.isConnected = database.connections[0].readyState;
+
+  // This is the new code to handle hot module replacement
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_IS_DEV_SERVER
+  ) {
+    await mongoose.disconnect();
+    connection.isConnected = false;
+  }
 }
 
 async function disconnectDb() {

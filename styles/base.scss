@@ -222,7 +222,8 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 }
 
-.product_swiper {
+.product_swiper,
+.similar_swiper {
   .swiper-button-prev,
   .swiper-button-next {
     background-color: #fff;
@@ -235,6 +236,24 @@ $cubic-bezier: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-style: $shadow-1;
     &::after {
       transform: scale(0.4);
+    }
+  }
+}
+
+.similar_swiper {
+  max-width: 550px;
+  margin-left: 0 !important;
+  .swiper-pagination {
+    display: none;
+  }
+  img {
+    width: 100px;
+    height: 160px;
+    object-fit: cover;
+    cursor: pointer;
+    @media (min-width: 461px) {
+      width: 150px;
+      height: 200px;
     }
   }
 }
